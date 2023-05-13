@@ -32,3 +32,6 @@ Sources for all project tasks (6 stages) with tests and configurations.
 13.05.23 Stage 1 completed. Just print outs.
 
 13.05.23 Stage 2 completed. A simple integer value menu and introduced a model class for traffic lights.
+
+13.05.23 Stage 3 completed. Input validation with regex and invalidAction-Runnable on Integer-queries.
+Console clearing via OS-ProcessBuilder.

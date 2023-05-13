@@ -32,18 +32,19 @@ class MainMenuControllerTest {
 
     @Test
     void whenRunAllStages_correctPrintouts() {
-        when(scannerMock.nextLine()).thenReturn("5", "3", "1", "2", "3", "0");
+        when(scannerMock.nextLine()).thenReturn("-1", "Hello", "0", "5", "-5", "World","0",
+                "3", "4", "-1", "Hello world", "2", "0", "0");
         controller.run();
-        verify(printerMock, times(4)).printInfo("""
+        verify(printerMock, times(5)).clearAndPrintMenu("""
             Menu:
             1. Add road
             2. Delete road
             3. Open system
             0. Quit""");
+        verify(printerMock, times(6)).printInfo("Incorrect Input. Try again:");
+        verify(printerMock, times(3)).printInfoAndWaitForReturn(scannerMock,"Incorrect option");
         InOrder inOrder = Mockito.inOrder(printerMock);
-        inOrder.verify(printerMock).printInfo("Road added");
-        inOrder.verify(printerMock).printInfo("Road deleted");
-        inOrder.verify(printerMock).printInfo("System opened");
+        inOrder.verify(printerMock).printInfoAndWaitForReturn(scannerMock,"Road deleted");
         inOrder.verify(printerMock).printInfo("Bye!");
     }
 }

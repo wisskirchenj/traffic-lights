@@ -57,21 +57,25 @@ public class MainMenuController implements Runnable {
 
     private void addRoad() {
         trafficLights.addRoad();
-        printer.printInfo("Road added");
+        printer.printInfoAndWaitForReturn(scanner,"Road added");
     }
 
     private void deleteRoad() {
         trafficLights.deleteRoad();
-        printer.printInfo("Road deleted");
+        printer.printInfoAndWaitForReturn(scanner, "Road deleted");
     }
 
     private void openSystem() {
-        printer.printInfo("System opened");
+        printer.printInfoAndWaitForReturn(scanner, "System opened");
     }
 
     private Choice getMenuChoice() {
-        printer.printInfo(MENU_TEXT);
-        return Choice.values()[Integer.parseInt(scanner.nextLine())];
+        printer.clearAndPrintMenu(MENU_TEXT);
+        var menuIndex = scanIntegerValidated("[0-3]", () -> {
+            printer.printInfoAndWaitForReturn(scanner, "Incorrect option");
+            printer.clearAndPrintMenu(MENU_TEXT);
+        });
+        return Choice.values()[menuIndex];
     }
 
     private void setupTrafficLights() {
@@ -82,7 +86,17 @@ public class MainMenuController implements Runnable {
 
     private int queryNumber(String queryMessage) {
         printer.printInfo(queryMessage);
-        return Integer.parseInt(scanner.nextLine());
+        return scanIntegerValidated("[1-9][0-9]{0,8}",
+                () -> printer.printInfo("Incorrect Input. Try again:"));
+    }
+
+    private int scanIntegerValidated(String regex, Runnable invalidAction) {
+        var input = scanner.nextLine();
+        while (!input.matches(regex)) {
+            invalidAction.run();
+            input = scanner.nextLine();
+        }
+        return Integer.parseInt(input);
     }
 
     private enum Choice {
