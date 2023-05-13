@@ -39,3 +39,6 @@ Console clearing via OS-ProcessBuilder.
 
 13.05.23 Stage 4 completed. Added SystemTimer on basis of java.util.Timer. Used Awaitility-library for timing
 unit tests
+
+13.05.23 Stage 5 completed. Circular queue for the roads implemented with ArrayDeque and added to TrafficLights.
+SystemTimer outputs roads in its state display.

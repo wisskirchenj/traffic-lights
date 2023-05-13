@@ -19,7 +19,7 @@ class SystemTimer {
     private final Timer timer;
     @Setter
     private boolean inSystemState = false;
-    @Getter
+    @Getter  // getter only needed for Awaitility-testing
     private int secondsPassed;
 
     public SystemTimer(ConsolePrinter printer, TrafficLights trafficLights) {
@@ -34,8 +34,12 @@ class SystemTimer {
                 ! %ds. have passed since system startup !
                 ! Number of roads: %d !
                 ! Interval: %d !
+                
+                %s
+                
                 ! Press "Enter" to open menu !"""
-                .formatted(secondsPassed, trafficLights.getNumberOfRoads(), trafficLights.getInterval());
+                .formatted(secondsPassed, trafficLights.getRoadCapacity(), trafficLights.getInterval(),
+                        trafficLights.getRoadsLines());
     }
 
     void purge() {

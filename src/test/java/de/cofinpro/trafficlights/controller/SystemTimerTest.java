@@ -20,6 +20,9 @@ class SystemTimerTest {
                 ! %ds. have passed since system startup !
                 ! Number of roads: %d !
                 ! Interval: %d !
+                
+                %s
+                
                 ! Press "Enter" to open menu !""";
 
     @Mock
@@ -49,8 +52,8 @@ class SystemTimerTest {
     void whenInSystemState_TimerDisplays() {
         timer.setInSystemState(true);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
-        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 3));
-        verify(printerMock, never()).printInfo(systemStatePattern.formatted(3, 3, 3));
+        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 3, ""));
+        verify(printerMock, never()).printInfo(systemStatePattern.formatted(3, 3, 3, ""));
     }
 
     @Test
@@ -58,18 +61,19 @@ class SystemTimerTest {
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
         timer.setInSystemState(true);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 3);
-        verify(printerMock, never()).printInfo(systemStatePattern.formatted(2, 3, 3));
-        verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 3));
+        verify(printerMock, never()).printInfo(systemStatePattern.formatted(2, 3, 3, ""));
+        verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 3, ""));
     }
 
     @Test
     void whenTrafficLightAdjusted_systemInfoUpdates() {
         timer.setInSystemState(true);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
-        trafficLights.addRoad();
+        trafficLights.addRoad("Test");
+        trafficLights.addRoad("Second street");
         trafficLights.setInterval(2);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 3);
-        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 3));
-        verify(printerMock).printInfo(systemStatePattern.formatted(3, 4, 2));
+        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 3, ""));
+        verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 2, "Test\nSecond street"));
     }
 }

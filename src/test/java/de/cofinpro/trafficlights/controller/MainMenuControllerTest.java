@@ -32,10 +32,10 @@ class MainMenuControllerTest {
 
     @Test
     void whenRunAllStages_correctPrintouts() {
-        when(scannerMock.nextLine()).thenReturn("-1", "Hello", "0", "5", "-5", "World","0",
-                "3", "4", "-1", "Hello world", "2", "1", "0");
+        when(scannerMock.nextLine()).thenReturn("-1", "Hello", "0", "1", "-5", "World", "0",
+                "3", "4", "-1", "Hello world", "2", "1", "Sesamestreet", "1", "Tstreet", "2", "0");
         controller.run();
-        verify(printerMock, times(6)).clearAndPrintMenu("""
+        verify(printerMock, times(8)).clearAndPrintMenu("""
             Menu:
             1. Add road
             2. Delete road
@@ -44,8 +44,10 @@ class MainMenuControllerTest {
         verify(printerMock, times(6)).printInfo("Incorrect Input. Try again:");
         verify(printerMock, times(3)).printInfoAndWaitForReturn(scannerMock,"Incorrect option");
         InOrder inOrder = Mockito.inOrder(printerMock);
-        inOrder.verify(printerMock).printInfoAndWaitForReturn(scannerMock,"Road deleted");
-        inOrder.verify(printerMock).printInfoAndWaitForReturn(scannerMock,"Road added");
+        inOrder.verify(printerMock).printInfoAndWaitForReturn(scannerMock,"The queue is empty");
+        inOrder.verify(printerMock).printInfoAndWaitForReturn(scannerMock,"Sesamestreet added");
+        inOrder.verify(printerMock).printInfoAndWaitForReturn(scannerMock,"The queue is full");
+        inOrder.verify(printerMock).printInfoAndWaitForReturn(scannerMock,"Sesamestreet deleted");
         inOrder.verify(printerMock).printInfo("Bye!");
     }
 }

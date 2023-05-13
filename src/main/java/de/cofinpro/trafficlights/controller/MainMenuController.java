@@ -59,13 +59,13 @@ public class MainMenuController implements Runnable {
     }
 
     private void addRoad() {
-        trafficLights.addRoad();
-        printer.printInfoAndWaitForReturn(scanner,"Road added");
+        printer.printInfo("Input road name:");
+        var road = scanner.nextLine();
+        printer.printInfoAndWaitForReturn(scanner, trafficLights.addRoad(road));
     }
 
     private void deleteRoad() {
-        trafficLights.deleteRoad();
-        printer.printInfoAndWaitForReturn(scanner, "Road deleted");
+        printer.printInfoAndWaitForReturn(scanner, trafficLights.deleteRoad());
     }
 
     private void openSystem() {
@@ -84,9 +84,9 @@ public class MainMenuController implements Runnable {
     }
 
     private void setupTrafficLights() {
-        var numberOfRoads = queryNumber("Input the number of roads: ");
-        var interval = queryNumber("Input the interval: ");
-        trafficLights = new TrafficLights(numberOfRoads, interval);
+        var roadCapacity = queryNumber("Input the number of roads:");
+        var interval = queryNumber("Input the interval:");
+        trafficLights = new TrafficLights(roadCapacity, interval);
     }
 
     private int queryNumber(String queryMessage) {
