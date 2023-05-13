@@ -26,11 +26,15 @@ public class ConsolePrinter {
      * and run by the script there.
      */
     @SneakyThrows
-    public void clearAndPrintMenu(String menuText) {
+    public void clear() {
         var clearCommand = System.getProperty("os.name").contains("Windows")
                 ? new ProcessBuilder("cmd", "/c", "cls")
                 : new ProcessBuilder("clear");
         clearCommand.inheritIO().start().waitFor();
+    }
+
+    public void clearAndPrintMenu(String menuText) {
+        clear();
         printInfo(menuText);
     }
 }

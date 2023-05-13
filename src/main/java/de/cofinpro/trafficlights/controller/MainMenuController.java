@@ -22,6 +22,7 @@ public class MainMenuController implements Runnable {
     private final ConsolePrinter printer;
     private final Scanner scanner;
     private TrafficLights trafficLights;
+    private SystemTimer systemTimer;
 
     public MainMenuController(ConsolePrinter printer, Scanner scanner) {
         this.printer = printer;
@@ -35,7 +36,9 @@ public class MainMenuController implements Runnable {
     public void run() {
         printer.printInfo(WELCOME_TEXT);
         setupTrafficLights();
+        systemTimer = new SystemTimer(printer, trafficLights);
         mainMenuLoop();
+        systemTimer.purge(); //needed only for HS-tests to pass
         printer.printInfo("Bye!");
     }
 
@@ -66,7 +69,9 @@ public class MainMenuController implements Runnable {
     }
 
     private void openSystem() {
-        printer.printInfoAndWaitForReturn(scanner, "System opened");
+        systemTimer.setInSystemState(true);
+        scanner.nextLine(); //wait on Return press
+        systemTimer.setInSystemState(false);
     }
 
     private Choice getMenuChoice() {

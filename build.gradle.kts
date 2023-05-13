@@ -32,6 +32,7 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
     testImplementation("org.mockito:mockito-junit-jupiter:5.3.1")
+    testImplementation("org.awaitility:awaitility:4.2.0")
 }
 
 tasks.named<Test>("test") {
