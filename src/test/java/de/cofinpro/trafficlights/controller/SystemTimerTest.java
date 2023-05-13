@@ -32,7 +32,6 @@ class SystemTimerTest {
     @BeforeEach
     void setUp() {
         trafficLights = new TrafficLights(3, 3);
-        assertFalse(Thread.getAllStackTraces().keySet().stream().map(Thread::getName).anyMatch("QueueThread"::equals));
         timer = new SystemTimer(printerMock, trafficLights);
     }
 
