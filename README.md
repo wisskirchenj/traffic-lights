@@ -23,7 +23,7 @@ converge to one.
 
 ## Repository Contents
 
-Sources for all project tasks (5 stages) with tests and configurations.
+Sources for all project tasks (6 stages) with tests and configurations.
 
 ## Progress
 
@@ -31,3 +31,4 @@ Sources for all project tasks (5 stages) with tests and configurations.
 
 13.05.23 Stage 1 completed. Just print outs.
 
+13.05.23 Stage 2 completed. A simple integer value menu and introduced a model class for traffic lights.
