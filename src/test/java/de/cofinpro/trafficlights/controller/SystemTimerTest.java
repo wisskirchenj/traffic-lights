@@ -7,9 +7,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoSettings;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -34,7 +36,7 @@ class SystemTimerTest {
 
     @BeforeEach
     void setUp() {
-        trafficLights = new TrafficLights(3, 3);
+        trafficLights = new TrafficLights(3, 2);
         timer = new SystemTimer(printerMock, trafficLights);
     }
 
@@ -52,8 +54,8 @@ class SystemTimerTest {
     void whenInSystemState_TimerDisplays() {
         timer.setInSystemState(true);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
-        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 3, ""));
-        verify(printerMock, never()).printInfo(systemStatePattern.formatted(3, 3, 3, ""));
+        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 2, ""));
+        verify(printerMock, never()).printInfo(systemStatePattern.formatted(3, 3, 2, ""));
     }
 
     @Test
@@ -61,8 +63,8 @@ class SystemTimerTest {
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
         timer.setInSystemState(true);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 3);
-        verify(printerMock, never()).printInfo(systemStatePattern.formatted(2, 3, 3, ""));
-        verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 3, ""));
+        verify(printerMock, never()).printInfo(systemStatePattern.formatted(2, 3, 2, ""));
+        verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 2, ""));
     }
 
     @Test
@@ -71,9 +73,16 @@ class SystemTimerTest {
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
         trafficLights.addRoad("Test");
         trafficLights.addRoad("Second street");
-        trafficLights.setInterval(2);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 3);
-        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 3, ""));
-        verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 2, "Test\nSecond street"));
+        Awaitility.await().until(() -> timer.getSecondsPassed() == 4);
+        Awaitility.await().until(() -> timer.getSecondsPassed() == 5);
+        var inOrder = Mockito.inOrder(printerMock);
+        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 2, ""));
+        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 2,
+                "Test is \u001B[32mopen for 2s.\u001B[0m\nSecond street is \u001B[31mclosed for 2s.\u001B[0m"));
+        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(4, 3, 2,
+                "Test is \u001B[32mopen for 1s.\u001B[0m\nSecond street is \u001B[31mclosed for 1s.\u001B[0m"));
+        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(5, 3, 2,
+                "Test is \u001B[31mclosed for 2s.\u001B[0m\nSecond street is \u001B[32mopen for 2s.\u001B[0m"));
     }
 }

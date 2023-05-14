@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 /**
  * SystemTimer, that starts on instantiation a named Timer daemon thread (not exceeding application run time).
- * Its TimerTask is run every second and displays system info  - iff field inSystemState is set to true.
+ * Its TimerTask is run every second and displays system info - iff field inSystemState is set to true.
  */
 class SystemTimer {
 
@@ -36,7 +36,7 @@ class SystemTimer {
                 ! Interval: %d !
                 
                 %s
-                
+
                 ! Press "Enter" to open menu !"""
                 .formatted(secondsPassed, trafficLights.getRoadCapacity(), trafficLights.getInterval(),
                         trafficLights.getRoadsLines());
@@ -52,11 +52,11 @@ class SystemTimer {
         @Override
         public void run() {
             secondsPassed++;
-            if (!inSystemState) {
-                return;
+            trafficLights.notifySecondPassed();
+            if (inSystemState) {
+                printer.clear();
+                printer.printInfo(getSystemInfo());
             }
-            printer.clear();
-            printer.printInfo(getSystemInfo());
         }
     }
 }

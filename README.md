@@ -20,7 +20,7 @@ converge to one.
 
 ## Project completion
 
-[//]: # (Project was completed on 29.04.23.)
+Project was completed on 14.05.23.
 
 ## Repository Contents
 
@@ -42,3 +42,6 @@ unit tests
 
 13.05.23 Stage 5 completed. Circular queue for the roads implemented with ArrayDeque and added to TrafficLights.
 SystemTimer outputs roads in its state display.
+
+14.05.23 Final Stage 6 completed. Road-dependent interval count-downs. Complicated timer logic implemented
+in TrafficLights using inner Road class. Extensive unit tests.
