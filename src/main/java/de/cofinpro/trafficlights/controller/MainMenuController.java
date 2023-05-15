@@ -75,10 +75,10 @@ public class MainMenuController implements Runnable {
     }
 
     private Choice getMenuChoice() {
-        printer.clearAndPrintMenu(MENU_TEXT);
+        printer.clearAndPrint(MENU_TEXT);
         var menuIndex = scanIntegerValidated("[0-3]", () -> {
             printer.printInfoAndWaitForReturn(scanner, "Incorrect option");
-            printer.clearAndPrintMenu(MENU_TEXT);
+            printer.clearAndPrint(MENU_TEXT);
         });
         return Choice.values()[menuIndex];
     }

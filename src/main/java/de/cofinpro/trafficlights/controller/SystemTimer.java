@@ -54,8 +54,7 @@ class SystemTimer {
             secondsPassed++;
             trafficLights.notifySecondPassed();
             if (inSystemState) {
-                printer.clear();
-                printer.printInfo(getSystemInfo());
+                printer.clearAndPrint(getSystemInfo());
             }
         }
     }

@@ -53,8 +53,8 @@ class SystemTimerTest {
     void whenInSystemState_TimerDisplays() {
         timer.setInSystemState(true);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
-        verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 2, ""));
-        verify(printerMock, never()).printInfo(systemStatePattern.formatted(3, 3, 2, ""));
+        verify(printerMock).clearAndPrint(systemStatePattern.formatted(2, 3, 2, ""));
+        verify(printerMock, never()).clearAndPrint(systemStatePattern.formatted(3, 3, 2, ""));
     }
 
     @Test
@@ -62,8 +62,8 @@ class SystemTimerTest {
         Awaitility.await().until(() -> timer.getSecondsPassed() == 2);
         timer.setInSystemState(true);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 3);
-        verify(printerMock, never()).printInfo(systemStatePattern.formatted(2, 3, 2, ""));
-        verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 2, ""));
+        verify(printerMock, never()).clearAndPrint(systemStatePattern.formatted(2, 3, 2, ""));
+        verify(printerMock).clearAndPrint(systemStatePattern.formatted(3, 3, 2, ""));
     }
 
     @Test
@@ -76,12 +76,12 @@ class SystemTimerTest {
         Awaitility.await().until(() -> timer.getSecondsPassed() == 4);
         Awaitility.await().until(() -> timer.getSecondsPassed() == 5);
         var inOrder = Mockito.inOrder(printerMock);
-        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(2, 3, 2, ""));
-        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(3, 3, 2,
+        inOrder.verify(printerMock).clearAndPrint(systemStatePattern.formatted(2, 3, 2, ""));
+        inOrder.verify(printerMock).clearAndPrint(systemStatePattern.formatted(3, 3, 2,
                 "Test is \u001B[32mopen for 2s.\u001B[0m\nSecond street is \u001B[31mclosed for 2s.\u001B[0m"));
-        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(4, 3, 2,
+        inOrder.verify(printerMock).clearAndPrint(systemStatePattern.formatted(4, 3, 2,
                 "Test is \u001B[32mopen for 1s.\u001B[0m\nSecond street is \u001B[31mclosed for 1s.\u001B[0m"));
-        inOrder.verify(printerMock).printInfo(systemStatePattern.formatted(5, 3, 2,
+        inOrder.verify(printerMock).clearAndPrint(systemStatePattern.formatted(5, 3, 2,
                 "Test is \u001B[31mclosed for 2s.\u001B[0m\nSecond street is \u001B[32mopen for 2s.\u001B[0m"));
     }
 }

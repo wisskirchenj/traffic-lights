@@ -35,7 +35,7 @@ class MainMenuControllerTest {
         when(scannerMock.nextLine()).thenReturn("-1", "Hello", "0", "1", "-5", "World", "0",
                 "3", "4", "-1", "Hello world", "2", "1", "Sesamestreet", "1", "Tstreet", "2", "0");
         controller.run();
-        verify(printerMock, times(8)).clearAndPrintMenu("""
+        verify(printerMock, times(8)).clearAndPrint("""
             Menu:
             1. Add road
             2. Delete road

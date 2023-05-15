@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class TrafficLights {
 
     private final List<Road> roads = new ArrayList<>();
-    private int roadCapacity;
-    private int interval;
+    private final int roadCapacity;
+    private final int interval;
     private int remainingInInterval;
 
     public TrafficLights(int roadCapacity, int interval) {
