@@ -42,9 +42,9 @@ public class TrafficLights {
         if (roads.isEmpty()) {
             return "The queue is empty";
         }
-        var message = "%s deleted".formatted(roads.get(0).getName());
+        var message = "%s deleted".formatted(roads.getFirst().getName());
         adjustCountersIfClosedRoadDeleted();
-        roads.remove(0);
+        roads.removeFirst();
         return message;
     }
 
@@ -56,7 +56,7 @@ public class TrafficLights {
         if (roads.stream().noneMatch(road -> road.secondsCounter<= interval)) {
             return;
         }
-        var secondsOnRoadToDelete = roads.get(0).getSecondsCounter();
+        var secondsOnRoadToDelete = roads.getFirst().getSecondsCounter();
         if (secondsOnRoadToDelete > interval) { // road is closed
             roads.stream()
                     .filter(road -> road.secondsCounter > secondsOnRoadToDelete)

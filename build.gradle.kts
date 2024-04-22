@@ -21,17 +21,17 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.21.0")
+    implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.22.1")
 
-    val lombokVersion = "1.18.30"
+    val lombokVersion = "1.18.32"
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     testCompileOnly("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.10.0")
     testImplementation("org.awaitility:awaitility:4.2.0")
 }
 
